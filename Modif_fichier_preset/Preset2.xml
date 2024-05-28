@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GMA3 DataVersion="1.9.7.0">
+    <Preset Name="FAN2" Guid="57 AB F9 0D 8A 87 A2 6F 31 35 4A DE D6 C5 0D A5" Active="No" ShuffleMode="Auto" Xinv="No" XinvB="No" XinvG="No" XinvW="No" Yinv="No" YinvB="No" YinvG="No" YinvW="No" Zinv="No" ZinvB="No" ZinvG="No" ZinvW="No" InvertX="No" InvertY="No" InvertZ="No" MAgic="No" Mode="0">
+        <PresetData Size="8">
+            <Phaser IDType="0" ID="101" Attribute="Pan" GridPos="0" Selective="true">
+                <Step Function="Pan" AbsolutePhys="-85.34" />
+            </Phaser>
+            <Phaser IDType="0" ID="101" Attribute="Tilt" GridPos="0" Selective="true">
+                <Step Function="Tilt" AbsolutePhys="-30.0" />
+            </Phaser>
+            <Phaser IDType="0" ID="102" Attribute="Pan" GridPos="0" Selective="true">
+                <Step Function="Pan" AbsolutePhys="-41.0" />
+            </Phaser>
+            <Phaser IDType="0" ID="102" Attribute="Tilt" GridPos="1" Selective="true">
+                <Step Function="Tilt" AbsolutePhys="-22.0" />
+            </Phaser>
+            <Phaser IDType="0" ID="103" Attribute="Pan" GridPos="2" Selective="true">
+                <Step Function="Pan" AbsolutePhys="9.999999" />
+            </Phaser>
+            <Phaser IDType="0" ID="103" Attribute="Tilt" GridPos="2" Selective="true">
+                <Step Function="Tilt" AbsolutePhys="-30.597927" />
+            </Phaser>
+            <Phaser IDType="0" ID="104" Attribute="Pan" GridPos="3" Selective="true">
+                <Step Function="Pan" AbsolutePhys="29.999998" />
+            </Phaser>
+            <Phaser IDType="0" ID="104" Attribute="Tilt" GridPos="3" Selective="true">
+                <Step Function="Tilt" AbsolutePhys="-30.597927" />
+            </Phaser>
+        </PresetData>
+    </Preset>
+</GMA3>

@@ -1,30 +1,30 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <GMA3 DataVersion="1.9.7.0">
-    <Preset Name="FAN" Guid="57 AB F9 0D 8A 87 A2 6F 31 35 4A DE D6 C5 0D A5" Active="No" ShuffleMode="Auto" Xinv="No" XinvB="No" XinvG="No" XinvW="No" Yinv="No" YinvB="No" YinvG="No" YinvW="No" Zinv="No" ZinvB="No" ZinvG="No" ZinvW="No" InvertX="No" InvertY="No" InvertZ="No" MAgic="No" Mode="0">
+    <Preset Name="FAN2" Guid="57 AB F9 0D 8A 87 A2 6F 31 35 4A DE D6 C5 0D A5" Active="No" ShuffleMode="Auto" Xinv="No" XinvB="No" XinvG="No" XinvW="No" Yinv="No" YinvB="No" YinvG="No" YinvW="No" Zinv="No" ZinvB="No" ZinvG="No" ZinvW="No" InvertX="No" InvertY="No" InvertZ="No" MAgic="No" Mode="0">
         <PresetData Size="8">
             <Phaser IDType="0" ID="101" Attribute="Pan" GridPos="0" Selective="true">
-                <Step Function="Pan" AbsolutePhys="-20.0" />
+                <Step Function="Pan" AbsolutePhys="-112.2" />
             </Phaser>
             <Phaser IDType="0" ID="101" Attribute="Tilt" GridPos="0" Selective="true">
-                <Step Function="Tilt" AbsolutePhys="-40.0" />
+                <Step Function="Tilt" AbsolutePhys="-23.61" />
             </Phaser>
             <Phaser IDType="0" ID="102" Attribute="Pan" GridPos="0" Selective="true">
-                <Step Function="Pan" AbsolutePhys="-10.0" />
+                <Step Function="Pan" AbsolutePhys="-118.33" />
             </Phaser>
-            <Phaser IDType="0" ID="102" Attribute="Tilt" GridPos="0" Selective="true">
-                <Step Function="Tilt" AbsolutePhys="-22.0" />
+            <Phaser IDType="0" ID="102" Attribute="Tilt" GridPos="1" Selective="true">
+                <Step Function="Tilt" AbsolutePhys="6.99" />
             </Phaser>
             <Phaser IDType="0" ID="103" Attribute="Pan" GridPos="2" Selective="true">
-                <Step Function="Pan" AbsolutePhys="9.999999" />
+                <Step Function="Pan" AbsolutePhys="-84.56" />
             </Phaser>
             <Phaser IDType="0" ID="103" Attribute="Tilt" GridPos="2" Selective="true">
-                <Step Function="Tilt" AbsolutePhys="-30.597927" />
+                <Step Function="Tilt" AbsolutePhys="-66.21" />
             </Phaser>
             <Phaser IDType="0" ID="104" Attribute="Pan" GridPos="3" Selective="true">
-                <Step Function="Pan" AbsolutePhys="29.999998" />
+                <Step Function="Pan" AbsolutePhys="101.19" />
             </Phaser>
             <Phaser IDType="0" ID="104" Attribute="Tilt" GridPos="3" Selective="true">
-                <Step Function="Tilt" AbsolutePhys="-30.597927" />
+                <Step Function="Tilt" AbsolutePhys="-84.67" />
             </Phaser>
         </PresetData>
     </Preset>

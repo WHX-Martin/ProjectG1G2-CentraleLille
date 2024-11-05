@@ -61,12 +61,17 @@ def obtenir_noms_feuilles(chemin_fichier):
     xl = pd.ExcelFile(chemin_fichier)
     return xl.sheet_names
 
-noms_feuilles = obtenir_noms_feuilles('./Presets1.xlsx')
-for nom_feuille in noms_feuilles:
-    valeurs_pan_tilt_par_id = recuperer_pan_tilt_par_id('./Presets1.xlsx',nom_feuille)
-    for id_unique, valeurs in valeurs_pan_tilt_par_id.items():
-        print(f"ID: {id_unique}, Pan: {valeurs['Pan']}, Tilt: {valeurs['Tilt']}")
-        modifier_xml(f'./{nom_feuille}',id_unique,'Pan',valeurs['Pan'][0])
-        modifier_xml(f'./{nom_feuille}',id_unique,'Tilt',valeurs['Tilt'][0])
+# Test fonction: run only when this file is the main program
+def main():
+    noms_feuilles = obtenir_noms_feuilles('./Presets1.xlsx')
+    for nom_feuille in noms_feuilles:
+        valeurs_pan_tilt_par_id = recuperer_pan_tilt_par_id('./Presets1.xlsx',nom_feuille)
+        for id_unique, valeurs in valeurs_pan_tilt_par_id.items():
+            print(f"ID: {id_unique}, Pan: {valeurs['Pan']}, Tilt: {valeurs['Tilt']}")
+            modifier_xml(f'./{nom_feuille}',id_unique,'Pan',valeurs['Pan'][0])
+            modifier_xml(f'./{nom_feuille}',id_unique,'Tilt',valeurs['Tilt'][0])
+
+if __name__ == "__main__":
+    main()
 
 

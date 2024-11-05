@@ -86,16 +86,19 @@ def get_xml_files(folder_path):
     return xml_files
 
 
+# Test fonction: run only when this file is the main program
+def main():
+    #test
+    # Specify the folder path.
+    folder_path = '.'
 
+    # Get all the xml files in the folder 
+    xml_files = get_xml_files("E:\大学\双学位\学习\ProjetG1G2\ProjectG1G2-CentraleLille\Modif_fichier_preset")
+    print("xml file in the folder：", xml_files)
+    for file in xml_files:
+        data = readXml(file)
+        writeExcel(data,'Presets1.xlsx')
 
-#test
-# Specify the folder path.
-folder_path = '.'
-
-# Get all the xml files in the folder 
-xml_files = get_xml_files(folder_path)
-print("xml file in the folder：", xml_files)
-for file in xml_files:
-    data = readXml(file)
-    writeExcel(data,'Presets1.xlsx')
+if __name__ == "__main__":
+    main()
 

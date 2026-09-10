@@ -1,0 +1,101 @@
+# ---------------------------------------------------------------
+# Projet : PresetsCorrection / ProjectG1G2 - Centrale Lille
+# ---------------------------------------------------------------
+
+# --- Artefacts de build / distribution ---
+build/
+dist/
+*.egg-info/
+.eggs/
+wheels/
+
+# --- Cache Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.python
+.installed.cfg
+
+# --- Environnements virtuels ---
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# --- Variables d'environnement / secrets ---
+.env
+*.env
+!.env.example
+*.key
+*.pem
+secrets.*
+credentials.*
+
+# --- Outils de qualité / tests ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+nosetests.xml
+*.cover
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+
+# --- Logs ---
+log/
+logs/
+*.log
+*.log.*
+
+# --- Système d'exploitation ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+*.lnk
+
+# --- Éditeurs / IDE ---
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# --- Données du projet / sorties générées ---
+PresetsCorrection*/
+*.xlsx
+*.xls
+*.xlsm
+*.xml
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+
+# --- Fichiers temporaires ---
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+*#$*
+*.pydeleteme
+
+*.gdtf

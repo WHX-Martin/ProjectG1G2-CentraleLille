@@ -1,0 +1,5 @@
+senor1 : armoire entree
+sensor2 : patt
+sensor3 : prise rouge
+sensor4 : clef wc/poinner
+sensor5 : ref calendrier

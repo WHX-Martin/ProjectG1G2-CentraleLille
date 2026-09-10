@@ -7,20 +7,65 @@ Created on Tue Jun  4 11:40:41 2024
 
 from scipy.optimize import least_squares
 import numpy as np
-from scipy.optimize import differential_evolution
 
-def tilt_theo_to_real(tilt):
-    # tilt_real = 0.8277 * tilt + 2.8336
-    tilt_real = 0.857 * tilt
-    return tilt_real
+# Définir les constantes (à remplacer par vos valeurs spécifiques)
 
+'''
+#TEST PETITE SALLE
 
-def tilt_real_to_theo(tilt):
-    # tilt_theo = 1.2082 * tilt - 3.4236
-    tilt_theo = (1 / 0.857) * tilt
-    return tilt_theo
+positions_bouteilles=[[1,-6.29,1.7],[3.42,-4.5,1.3],[3.42,-1.0,1.2],[-3,-6.29,2],[-3,5,0]] #postion x_B1,y_B1,z_B1 de la première bouteille, puis de la deuxième etc... 
+position_theorique_projecteur=[0,0,0.29] # postion théorique du projecteur dans l'espace
 
 
+##valeurs parfaites
+Angles_réél_projecteur=[[0.1+np.arctan(-6.29/0.5),np.arctan(np.sqrt(0.5**2 + 6.29**2)/1.41)],[np.arctan(-4.5/2.92),np.arctan(np.sqrt(4.5**2 + 2.92**2)/1.01)],[np.arctan(-1.0/2.92),np.arctan(np.sqrt(1.0**2 + 2.92**2)/0.91)],[-np.pi/2 - np.arctan(3.5/6.29),np.arctan(np.sqrt(6.29**2 + 3.5**2)/1.71)],[np.pi/2 + np.arctan(3.5/5),np.pi/2+np.arctan(0.29/np.sqrt(3.5**2 + 5**2))]] #Angle du projecteur sur la bouteille 1 [pan_bouteille1,tilt_bouteille1], puis angle du projecteur sur la bouteille 2...
+
+##valeurs mesurée dans l'expérience et 4eme et 5eme boutaille parfaite 
+###Angles_réél_projecteur=[[-1.497492,1.343204],[-0.997455,1.377800],[-0.3551745027,1.286207],[-np.pi/2 - np.arctan(3.5/6.29),np.arctan(np.sqrt(6.29**2 + 3.5**2)/1.71)],[np.pi/2 + np.arctan(3.5/5),np.pi/2+np.arctan(0.29/np.sqrt(3.5**2 + 5**2))]] #Angle du projecteur sur la bouteille 1 [pan_bouteille1,tilt_bouteille1], puis angle du projecteur sur la bouteille 2...
+
+##valeurs mesurée dans l'expérience et 4eme et 5eme boutaille avec des erreurs du meme ordre de grandeur 
+###Angles_réél_projecteur=[[-1.497492,1.343204],[-0.997455,1.377800],[-0.3551745027,1.286207],[-np.pi/2 - np.arctan(3.5/6.29)+0.007,np.arctan(np.sqrt(6.29**2 + 3.5**2)/1.71)-0.008],[np.pi/2 + np.arctan(3.5/5)-0.009,np.pi/2+np.arctan(0.29/np.sqrt(3.5**2+5**2))+0.006]] #Angle du projecteur sur la bouteille 1 [pan_bouteille1,tilt_bouteille1], puis angle du projecteur sur la bouteille 2...
+'''
+#TEST THEORIQUE BOUTEILLE à 10,0,0   0,10,0   10,10,0  -10,10,0  10,-10,0 mettres 
+
+#position_theorique_projecteur=[0,0,10] # postion théorique du projecteur dans l'espace
+#positions_bouteilles=[[10,0,0],[0,10,0],[10,10,0],[-10,10,0],[10,-10,0]] #postion x_B1,y_B1,z_B1 de la première bouteille, puis de la deuxième etc... 
+
+
+##Valeurs parfaites
+###Angles_réél_projecteur=[[-np.arctan(1/9)-np.pi/9,np.pi/2+np.arctan(11/np.sqrt(82))],[np.pi/2+np.arctan(1/9)-np.pi/9,np.pi/2+np.arctan(11/np.sqrt(82))],[5*np.pi/36,np.pi/2+np.arctan(11/(9*np.sqrt(2)))],[np.pi/2+np.arctan(11/9)-np.pi/9,np.pi/2+np.arctan(11/np.sqrt(9**2 + 11**2))],[-np.arctan(11/9)-np.pi/9,np.pi/2+np.arctan(11/np.sqrt(9**2 + 11**2))]]
+
+##Valeurs avec un ordre de grandeur cohérent d'erreur
+#Angles_réél_projecteur=[[-np.arctan(1/9)-np.pi/9+0.008,np.pi/2+np.arctan(11/np.sqrt(82))-0.007],[np.pi/2+np.arctan(1/9)-np.pi/9+0.009,np.pi/2+np.arctan(11/np.sqrt(82))-0.008],[5*np.pi/36-0.008,np.pi/2+np.arctan(11/(9*np.sqrt(2)))+0.007],[np.pi/2+np.arctan(11/9)-np.pi/9-0.009,np.pi/2+np.arctan(11/np.sqrt(9**2 + 11**2))+0.006],[-np.arctan(11/9)-np.pi/9-0.008,np.pi/2+np.arctan(11/np.sqrt(9**2 + 11**2))+0.007]]
+'''
+#2eme TEST THEORIQUE BOUTEILLE à 10,0,0   0,10,0   10,10,0  -10,10,0  10,-10,0 mettres 
+
+position_theorique_projecteur=[0,0,10] # postion théorique du projecteur dans l'espace
+positions_bouteilles=[[10,0,0],[0,10,0],[10,10,0],[-10,10,0],[10,-10,0]] #postion x_B1,y_B1,z_B1 de la première bouteille, puis de la deuxième etc... 
+
+
+##Valeurs parfaites
+###Angles_réél_projecteur=[[-np.arctan(0.05/9.95)-np.pi/9,np.pi/2+np.arctan(10.05/np.sqrt(9.95**2+0.05**2))],[np.pi/2+np.arctan(0.05/9.95)-np.pi/9,np.pi/2+np.arctan(10.05/np.sqrt(9.95**2+0.05**2))],[5*np.pi/36,np.pi/2+np.arctan(10.05/(9.95*np.sqrt(2)))],[np.pi/2+np.arctan(10.05/9.95)-np.pi/9,np.pi/2+np.arctan(10.05/np.sqrt(9.95**2 + 10.05**2))],[-np.arctan(10.05/9.95)-np.pi/9,np.pi/2+np.arctan(10.05/np.sqrt(9.95**2 + 10.05**2))]]
+
+##Valeurs avec un ordre de grandeur cohérent d'erreur
+Angles_réél_projecteur=[[-np.arctan(0.05/9.95)-np.pi/9+0.001,np.pi/2+np.arctan(10.05/np.sqrt(9.95**2+0.05**2))-0.001],[np.pi/2+np.arctan(0.05/9.95)-np.pi/9+0.002,np.pi/2+np.arctan(10.05/np.sqrt(9.95**2+0.05**2))-0.002],[5*np.pi/36-0.002,np.pi/2+np.arctan(10.05/(9.95*np.sqrt(2)))+0.001],[np.pi/2+np.arctan(10.05/9.95)-np.pi/9-0.002,np.pi/2+np.arctan(10.05/np.sqrt(9.95**2 + 10.05**2))+0.001],[-np.arctan(10.05/9.95)-np.pi/9-0.002,np.pi/2+np.arctan(10.05/np.sqrt(9.95**2 + 10.05**2))+0.001]]
+
+#TEST BASILE
+
+#positions_bouteilles=[[0,3,0],[0,0,2],[8,0,0],[8,3,0]] #postion x_B1,y_B1,z_B1 de la première bouteille, puis de la deuxième etc... 
+positions_bouteilles=[[0.04,3.03,0.02],[0.05,-0.03,1.99],[7.96,-0.02,0],[7.96,3.03,0.01]] #postion x_B1,y_B1,z_B1 de la première bouteille, puis de la deuxième etc... 
+position_theorique_projecteur=[0,0,0] # postion théorique du projecteur dans l'espace
+
+
+##valeurs parfaites
+###Angles_réél_projecteur=[[np.pi/2+np.arctan(1/2),np.pi/2+np.arctan(1/np.sqrt(5))],[np.pi*5/4,np.arctan(np.sqrt(2))],[-np.arctan(1/7),+np.pi/2+np.arctan(1/np.sqrt(50))],[np.arctan(2/7),np.pi/2+np.arctan(1/np.sqrt(2**2+7**2))]] #Angle du projecteur sur la bouteille 1 [pan_bouteille1,tilt_bouteille1], puis angle du projecteur sur la bouteille 2...
+
+##Valeurs avec un ordre de grandeur cohérent d'erreur
+
+Angles_réél_projecteur=[[2.05,2.00],[3.90,0.95],[-0.15,1.70],[0.30,1.70]] #Angle du projecteur sur la bouteille 1 [pan_bouteille1,tilt_bouteille1], puis angle du projecteur sur la bouteille 2...
+
+
+'''
 
 
 """
@@ -30,41 +75,34 @@ x[2] représente delta_z
 x[3] représente delta_alpha
 x[4] représente delta_beta"""
 
-def fonction_finale(Angles_réél_projecteur,positions_bouteilles,position_theorique_projecteur):
-    pan1,tilt1= Angles_réél_projecteur[0]
-    pan2,tilt2= Angles_réél_projecteur[1]
-    pan3,tilt3= Angles_réél_projecteur[2]
+def fonction_finale5B(Angles_réél_projecteur,positions_bouteilles,position_theorique_projecteur):
+    pan1,tilt1= np.radians(Angles_réél_projecteur[0])
+    pan2,tilt2= np.radians(Angles_réél_projecteur[1])
+    pan3,tilt3= np.radians(Angles_réél_projecteur[2])
+    pan4,tilt4= np.radians(Angles_réél_projecteur[3])
+    pan5,tilt5= np.radians(Angles_réél_projecteur[4])
     x_B1,y_B1,z_B1= positions_bouteilles[0]
     x_B2,y_B2,z_B2= positions_bouteilles[1]
     x_B3,y_B3,z_B3= positions_bouteilles[2]
+    x_B4,y_B4,z_B4= positions_bouteilles[3]
+    x_B5,y_B5,z_B5= positions_bouteilles[4]
     x_t,y_t,z_t=position_theorique_projecteur
-    # angle to radian
-    pan1 = np.radians(pan1)
-    pan2 = np.radians(pan2)
-    pan3 = np.radians(pan3)
-    tilt1 = np.radians(tilt1)
-    tilt2 = np.radians(tilt2)
-    tilt3 = np.radians(tilt3)
-    #x0=np.array([2.0,2.0,1.0,np.pi/9,0])
+    #x0=np.array([0.1,0.1,0.1,0.1,0.1])
     #x0 = np.zeros(5)
     x0=np.array([x_t,y_t,z_t,0.01,0.01])
-    #print(pan2)
+    #print(pan1)
     def system_of_equations(x):
-        f1p = np.tan(pan1)+((x_B1-x_t-x[0])*np.sin(x[3])-(y_B1-y_t-x[1])*np.cos(x[3]))/(((x_B1-x_t-x[0])*np.cos(x[3])+(y_B1-y_t-x[1])*np.sin(x[3]))*np.cos(x[4])-(z_B1-z_t-x[2])*np.sin(x[4]))
-        f1t = np.cos(tilt1)-(((x_B1-x_t-x[0])*np.cos(x[3])+(y_B1-y_t-x[1])*np.sin(x[3]))*np.sin(x[4])+(z_B1-z_t-x[2])*np.cos(x[4]))/np.sqrt((((x_B1-x_t-x[0])*np.cos(x[3])+(y_B1-y_t-x[1])*np.sin(x[3]))*np.cos(x[4])-(z_B1-z_t-x[2])*np.sin(x[4]))**2+(-(x_B1-x_t-x[0])*np.sin(x[3])+(y_B1-y_t-x[1])*np.cos(x[3]))**2+(((x_B1-x_t-x[0])*np.cos(x[3])+(y_B1-y_t-x[1])*np.sin(x[3]))*np.sin(x[4])+(z_B1-z_t-x[2])*np.cos(x[4]))**2)
-        f2p = np.tan(pan2)+((x_B2-x_t-x[0])*np.sin(x[3])-(y_B2-y_t-x[1])*np.cos(x[3]))/(((x_B2-x_t-x[0])*np.cos(x[3])+(y_B2-y_t-x[1])*np.sin(x[3]))*np.cos(x[4])-(z_B2-z_t-x[2])*np.sin(x[4]))
-        f2t = np.cos(tilt2)-(((x_B2-x_t-x[0])*np.cos(x[3])+(y_B2-y_t-x[1])*np.sin(x[3]))*np.sin(x[4])+(z_B2-z_t-x[2])*np.cos(x[4]))/np.sqrt((((x_B2-x_t-x[0])*np.cos(x[3])+(y_B2-y_t-x[1])*np.sin(x[3]))*np.cos(x[4])-(z_B2-z_t-x[2])*np.sin(x[4]))**2+(-(x_B2-x_t-x[0])*np.sin(x[3])+(y_B2-y_t-x[1])*np.cos(x[3]))**2+(((x_B2-x_t-x[0])*np.cos(x[3])+(y_B2-y_t-x[1])*np.sin(x[3]))*np.sin(x[4])+(z_B2-z_t-x[2])*np.cos(x[4]))**2)
-        f3p = np.tan(pan3)+((x_B3-x_t-x[0])*np.sin(x[3])-(y_B3-y_t-x[1])*np.cos(x[3]))/(((x_B3-x_t-x[0])*np.cos(x[3])+(y_B3-y_t-x[1])*np.sin(x[3]))*np.cos(x[4])-(z_B3-z_t-x[2])*np.sin(x[4]))
-        f3t = np.cos(tilt3)-(((x_B3-x_t-x[0])*np.cos(x[3])+(y_B3-y_t-x[1])*np.sin(x[3]))*np.sin(x[4])+(z_B3-z_t-x[2])*np.cos(x[4]))/np.sqrt((((x_B3-x_t-x[0])*np.cos(x[3])+(y_B3-y_t-x[1])*np.sin(x[3]))*np.cos(x[4])-(z_B3-z_t-x[2])*np.sin(x[4]))**2+(-(x_B3-x_t-x[0])*np.sin(x[3])+(y_B3-y_t-x[1])*np.cos(x[3]))**2+(((x_B3-x_t-x[0])*np.cos(x[3])+(y_B3-y_t-x[1])*np.sin(x[3]))*np.sin(x[4])+(z_B3-z_t-x[2])*np.cos(x[4]))**2)
-        return [f1p, f1t, f2p, f2t, f3p, f3t]
-    def system_of_equations1(x):
-        f1p = np.tan(pan1)+((x_B1-x_t-x[0])*np.sin(x[3])-(y_B1-y_t-x[1])*np.cos(x[3]))/(((x_B1-x_t-x[0])*np.cos(x[3])+(y_B1-y_t-x[1])*np.sin(x[3]))*np.cos(x[4])-(z_B1-z_t-x[2])*np.sin(x[4]))
-        f1t = np.cos(tilt1)-(((x_B1-x_t-x[0])*np.cos(x[3])+(y_B1-y_t-x[1])*np.sin(x[3]))*np.sin(x[4])+(z_B1-z_t-x[2])*np.cos(x[4]))/np.sqrt((((x_B1-x_t-x[0])*np.cos(x[3])+(y_B1-y_t-x[1])*np.sin(x[3]))*np.cos(x[4])-(z_B1-z_t-x[2])*np.sin(x[4]))**2+(-(x_B1-x_t-x[0])*np.sin(x[3])+(y_B1-y_t-x[1])*np.cos(x[3]))**2+(((x_B1-x_t-x[0])*np.cos(x[3])+(y_B1-y_t-x[1])*np.sin(x[3]))*np.sin(x[4])+(z_B1-z_t-x[2])*np.cos(x[4]))**2)
-        f2p = np.tan(pan2)+((x_B2-x_t-x[0])*np.sin(x[3])-(y_B2-y_t-x[1])*np.cos(x[3]))/(((x_B2-x_t-x[0])*np.cos(x[3])+(y_B2-y_t-x[1])*np.sin(x[3]))*np.cos(x[4])-(z_B2-z_t-x[2])*np.sin(x[4]))
-        f2t = np.cos(tilt2)-(((x_B2-x_t-x[0])*np.cos(x[3])+(y_B2-y_t-x[1])*np.sin(x[3]))*np.sin(x[4])+(z_B2-z_t-x[2])*np.cos(x[4]))/np.sqrt((((x_B2-x_t-x[0])*np.cos(x[3])+(y_B2-y_t-x[1])*np.sin(x[3]))*np.cos(x[4])-(z_B2-z_t-x[2])*np.sin(x[4]))**2+(-(x_B2-x_t-x[0])*np.sin(x[3])+(y_B2-y_t-x[1])*np.cos(x[3]))**2+(((x_B2-x_t-x[0])*np.cos(x[3])+(y_B2-y_t-x[1])*np.sin(x[3]))*np.sin(x[4])+(z_B2-z_t-x[2])*np.cos(x[4]))**2)
-        f3p = np.tan(pan3)+((x_B3-x_t-x[0])*np.sin(x[3])-(y_B3-y_t-x[1])*np.cos(x[3]))/(((x_B3-x_t-x[0])*np.cos(x[3])+(y_B3-y_t-x[1])*np.sin(x[3]))*np.cos(x[4])-(z_B3-z_t-x[2])*np.sin(x[4]))
-        f3t = np.cos(tilt3)-(((x_B3-x_t-x[0])*np.cos(x[3])+(y_B3-y_t-x[1])*np.sin(x[3]))*np.sin(x[4])+(z_B3-z_t-x[2])*np.cos(x[4]))/np.sqrt((((x_B3-x_t-x[0])*np.cos(x[3])+(y_B3-y_t-x[1])*np.sin(x[3]))*np.cos(x[4])-(z_B3-z_t-x[2])*np.sin(x[4]))**2+(-(x_B3-x_t-x[0])*np.sin(x[3])+(y_B3-y_t-x[1])*np.cos(x[3]))**2+(((x_B3-x_t-x[0])*np.cos(x[3])+(y_B3-y_t-x[1])*np.sin(x[3]))*np.sin(x[4])+(z_B3-z_t-x[2])*np.cos(x[4]))**2)
-        return np.sum(np.array([f1p, f1t, f2p, f2t, f3p, f3t]) ** 2)
+        f1p = np.tan(pan1) + ((x_B1 - x_t - x[0]) * np.sin(x[3]) - (y_B1 - y_t - x[1]) * np.cos(x[3])) / (((x_B1 - x_t - x[0]) * np.cos(x[3]) + (y_B1 - y_t - x[1]) * np.sin(x[3])) * np.cos(x[4]) - (z_B1 - z_t - x[2]) * np.sin(x[4]))
+        f1t = np.cos(tilt1) - (((x_B1 - x_t - x[0]) * np.cos(x[3]) + (y_B1 - y_t - x[1]) * np.sin(x[3])) * np.sin(x[4]) + (z_B1 - z_t - x[2]) * np.cos(x[4])) / np.sqrt((((x_B1 - x_t - x[0]) * np.cos(x[3]) + (y_B1 - y_t - x[1]) * np.sin(x[3])) * np.cos(x[4]) - (z_B1 - z_t - x[2]) * np.sin(x[4]))**2 + (-(x_B1 - x_t - x[0]) * np.sin(x[3]) + (y_B1 - y_t - x[1]) * np.cos(x[3]))**2 + (((x_B1 - x_t - x[0]) * np.cos(x[3]) + (y_B1 - y_t - x[1]) * np.sin(x[3])) * np.sin(x[4]) + (z_B1 - z_t - x[2]) * np.cos(x[4]))**2)
+        f2p = np.tan(pan2) + ((x_B2 - x_t - x[0]) * np.sin(x[3]) - (y_B2 - y_t - x[1]) * np.cos(x[3])) / (((x_B2 - x_t - x[0]) * np.cos(x[3]) + (y_B2 - y_t - x[1]) * np.sin(x[3])) * np.cos(x[4]) - (z_B2 - z_t - x[2]) * np.sin(x[4]))
+        f2t = np.cos(tilt2) - (((x_B2 - x_t - x[0]) * np.cos(x[3]) + (y_B2 - y_t - x[1]) * np.sin(x[3])) * np.sin(x[4]) + (z_B2 - z_t - x[2]) * np.cos(x[4])) / np.sqrt((((x_B2 - x_t - x[0]) * np.cos(x[3]) + (y_B2 - y_t - x[1]) * np.sin(x[3])) * np.cos(x[4]) - (z_B2 - z_t - x[2]) * np.sin(x[4]))**2 + (-(x_B2 - x_t - x[0]) * np.sin(x[3]) + (y_B2 - y_t - x[1]) * np.cos(x[3]))**2 + (((x_B2 - x_t - x[0]) * np.cos(x[3]) + (y_B2 - y_t - x[1]) * np.sin(x[3])) * np.sin(x[4]) + (z_B2 - z_t - x[2]) * np.cos(x[4]))**2)
+        f3p = np.tan(pan3) + ((x_B3 - x_t - x[0]) * np.sin(x[3]) - (y_B3 - y_t - x[1]) * np.cos(x[3])) / (((x_B3 - x_t - x[0]) * np.cos(x[3]) + (y_B3 - y_t - x[1]) * np.sin(x[3])) * np.cos(x[4]) - (z_B3 - z_t - x[2]) * np.sin(x[4]))
+        f3t = np.cos(tilt3) - (((x_B3 - x_t - x[0]) * np.cos(x[3]) + (y_B3 - y_t - x[1]) * np.sin(x[3])) * np.sin(x[4]) + (z_B3 - z_t - x[2]) * np.cos(x[4])) / np.sqrt((((x_B3 - x_t - x[0]) * np.cos(x[3]) + (y_B3 - y_t - x[1]) * np.sin(x[3])) * np.cos(x[4]) - (z_B3 - z_t - x[2]) * np.sin(x[4]))**2 + (-(x_B3 - x_t - x[0]) * np.sin(x[3]) + (y_B3 - y_t - x[1]) * np.cos(x[3]))**2 + (((x_B3 - x_t - x[0]) * np.cos(x[3]) + (y_B3 - y_t - x[1]) * np.sin(x[3])) * np.sin(x[4]) + (z_B3 - z_t - x[2]) * np.cos(x[4]))**2)        
+        f4p = np.tan(pan4) + ((x_B4 - x_t - x[0]) * np.sin(x[3]) - (y_B4 - y_t - x[1]) * np.cos(x[3])) / (((x_B4 - x_t - x[0]) * np.cos(x[3]) + (y_B4 - y_t - x[1]) * np.sin(x[3])) * np.cos(x[4]) - (z_B4 - z_t - x[2]) * np.sin(x[4]))
+        f4t = np.cos(tilt4) - (((x_B4 - x_t - x[0]) * np.cos(x[3]) + (y_B4 - y_t - x[1]) * np.sin(x[3])) * np.sin(x[4]) + (z_B4 - z_t - x[2]) * np.cos(x[4])) / np.sqrt((((x_B4 - x_t - x[0]) * np.cos(x[3]) + (y_B4 - y_t - x[1]) * np.sin(x[3])) * np.cos(x[4]) - (z_B4 - z_t - x[2]) * np.sin(x[4]))**2 + (-(x_B4 - x_t - x[0]) * np.sin(x[3]) + (y_B4 - y_t - x[1]) * np.cos(x[3]))**2 + (((x_B4 - x_t - x[0]) * np.cos(x[3]) + (y_B4 - y_t - x[1]) * np.sin(x[3])) * np.sin(x[4]) + (z_B4 - z_t - x[2]) * np.cos(x[4]))**2)
+        f5p = np.tan(pan5) + ((x_B5 - x_t - x[0]) * np.sin(x[3]) - (y_B5 - y_t - x[1]) * np.cos(x[3])) / (((x_B5 - x_t - x[0]) * np.cos(x[3]) + (y_B5 - y_t - x[1]) * np.sin(x[3])) * np.cos(x[4]) - (z_B5 - z_t - x[2]) * np.sin(x[4]))
+        f5t = np.cos(tilt5) - (((x_B5 - x_t - x[0]) * np.cos(x[3]) + (y_B5 - y_t - x[1]) * np.sin(x[3])) * np.sin(x[4]) + (z_B5 - z_t - x[2]) * np.cos(x[4])) / np.sqrt((((x_B5 - x_t - x[0]) * np.cos(x[3]) + (y_B5 - y_t - x[1]) * np.sin(x[3])) * np.cos(x[4]) - (z_B5 - z_t - x[2]) * np.sin(x[4]))**2 + (-(x_B5 - x_t - x[0]) * np.sin(x[3]) + (y_B5 - y_t - x[1]) * np.cos(x[3]))**2 + (((x_B5 - x_t - x[0]) * np.cos(x[3]) + (y_B5 - y_t - x[1]) * np.sin(x[3])) * np.sin(x[4]) + (z_B5 - z_t - x[2]) * np.cos(x[4]))**2)
+        return [f1p, f1t, f2p, f2t, f3p, f3t, f4p, f4t, f5p,f5t]
     def jacobian(x):
         
         df1p_dx = (-(y_B1-y_t-x[1])*np.cos(x[4])+(z_B1-z_t-x[2])*np.sin(x[3])*np.sin(x[4]))/((((x_B1-x_t-x[0])*np.cos(x[3])+(y_B1-y_t-x[1])*np.sin(x[3]))*np.cos(x[4])-(z_B1-z_t-x[2])*np.sin(x[4]))**2)
@@ -115,14 +153,10 @@ def fonction_finale(Angles_réél_projecteur,positions_bouteilles,position_theor
             [df3p_dx, df3p_dy, df3p_dz, df3p_dAlpha, df3p_dBeta],
             [df3t_dx, df3t_dy, df3t_dz, df3t_dAlpha, df3t_dBeta]
         ])
-    bounds = [(x_t-3,x_t+3),(y_t-3,y_t+3),(z_t-3,z_t+3),(-np.pi/2,np.pi/2),(-np.pi/2,np.pi/2)]
-    result = differential_evolution(system_of_equations1, bounds)
     #res = least_squares(system_of_equations, x0, jac=jacobian,method='lm')
-    res = least_squares(system_of_equations, x0,method='lm')
-    #res = least_squares(system_of_equations, result.x,bounds=([x_t-30, y_t-30, z_t-30, -np.pi/2, -np.pi/2], [x_t+30, y_t+30, z_t+30, np.pi/2, np.pi/2]),method='trf')
+    res = least_squares(system_of_equations, x0,method='trf',loss='soft_l1', f_scale=0.5)
     #rajouter bounds=[[-3,3],[3,3],[3,3],[-1,1],[-1,1]]
-    #return(res.x,res.cost,res.fun,res.message,system_of_equations([1,1,1,np.pi/9,0]))
-    return([0.5,0,0,0,0],res.cost,res.fun,res.message,system_of_equations([1,1,1,np.pi/9,0]))
+    return(res.x,res.cost,res.fun,res.message,system_of_equations([0.5,0,0,0,0]))
 
 
     
@@ -202,43 +236,15 @@ print("Coût : ", res.cost)
 print("Résidus : ", res.fun)
 print("Jacobian : ", res.jac)"""
 
-
-
 if __name__ == "__main__":
-    # Définir les constantes (à remplacer par vos valeurs spécifiques)
+    presets_mesure1 = [[np.float64(165.000014), np.float64(-92.127493144)], [np.float64(-3.7), np.float64(-87.242602571)], [np.float64(230.700016), np.float64(-82.100602571)], [np.float64(-79.949999), np.float64(-89.299405142)], [np.float64(-33.500007), np.float64(-87.242602571)]]
+    position_bouteilles = [[-1.993,0,1.09],[-12.45,-0.802,1.827],[0,-6.019,2.418],[-5.375,-6.049,1.402],[-12.45,-5.63,2]]
+    position_theo_projecteur1 = [-4.383,-0.573,1.06]
+    presets_mesure2 = [[np.float64(112.000004), np.float64(-78.844)], [np.float64(11.249989), np.float64(-82.443400857)], [np.float64(220.780005), np.float64(-66.503198286)], [np.float64(-58.600012), np.float64(-73.83055428499999)], [np.float64(-18.549986), np.float64(-81.372155142)]]
+    position_theo_projecteur2 = [-3.434,-2.967,0.29]
+    res1 = fonction_finale5B(presets_mesure1,position_bouteilles,position_theo_projecteur1)
+    print(res1[0])
     
-    #test1
-    #Angles_réél_projecteur=[[53.55,tilt_theo_to_real(71.75)],[-54.5,tilt_theo_to_real(96.6)],[82.25,tilt_theo_to_real(92.8)]]
-
-    #positions_bouteilles=[[259.8,323.1,254],[330,411,110],[120,819.9,200]] #postion x_B1,y_B1,z_B1 de la première bouteille, puis de la deuxième etc... 
-
-    #position_theorique_projecteur=[0,0,29] # postion théorique du projecteur dans l'espace
+    res2 = fonction_finale5B(presets_mesure2,position_bouteilles,position_theo_projecteur2)
+    print(res2[0])
     
-    #test2
-    # Angles_réél_projecteur=[[85.8,tilt_theo_to_real(89.75)],[57.15,tilt_theo_to_real(92.10)],[20.35,tilt_theo_to_real(85.75)]]
-
-    # positions_bouteilles=[[1,6.29,-1.7],[3.42,4.5,-1.3],[3.42,1,-1.2]] #postion x_B1,y_B1,z_B1 de la première bouteille, puis de la deuxième etc... 
-
-    # position_theorique_projecteur=[0,0,-0.29] # postion théorique du projecteur dans l'espace
-    
-    # coordonnee faux
-    #Angles_réél_projecteur=[[85.8,tilt_theo_to_real(89.75)],[57.15,tilt_theo_to_real(92.10)],[20.35,tilt_theo_to_real(85.75)]]
-
-    #positions_bouteilles=[[6.29,1,1.7],[4.5,3.42,1.3],[1,3.42,1.2]] #postion x_B1,y_B1,z_B1 de la première bouteille, puis de la deuxième etc... 
-
-    #position_theorique_projecteur=[0,0,0.29] # postion théorique du projecteur dans l'espace
-    #test3
-    Angles_réél_projecteur=[[80.20,tilt_theo_to_real(90.23)],[52.65,tilt_theo_to_real(96.5)],[17.9,tilt_theo_to_real(95.15)]]
-
-    positions_bouteilles=[[1,6.29,-1.7],[3.42,4.5,-1.3],[3.42,1,-1.2]] #postion x_B1,y_B1,z_B1 de la première bouteille, puis de la deuxième etc... 
-
-    position_theorique_projecteur=[0,0,-0.29] # postion théorique du projecteur dans l'espace
-
-    print(Angles_réél_projecteur)
-    res = fonction_finale(Angles_réél_projecteur,positions_bouteilles,position_theorique_projecteur)
-    print(res[0])
-    print(f"alpha:{np.degrees(res[0][3])} degree\n")
-    print(f"beta:{np.degrees(res[0][4])} degree\n")
-
-    #print()
-

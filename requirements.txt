@@ -1,0 +1,19 @@
+# ProjectG1G2 - Presets Correction
+# Runtime dependencies (Python 3.10+)
+#
+#   pip install -r requirements.txt
+#
+# NOTE: keep this file ASCII-only. pip decodes it with the system
+# locale (GBK on zh-CN Windows) and would fail on non-ASCII chars.
+
+# GUI
+PySide6==6.8.0.2
+qt-material==2.14
+
+# Excel / preset I/O
+pandas==2.2.3
+openpyxl==3.1.5
+
+# Least-squares solver
+numpy==2.1.3
+scipy==1.14.1

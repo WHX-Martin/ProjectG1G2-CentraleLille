@@ -1,0 +1,11 @@
+# ProjectG1G2 - Presets Correction
+# Development / packaging dependencies
+#
+#   pip install -r requirements-dev.txt
+#
+# NOTE: ASCII-only, see requirements.txt for the reason.
+
+-r requirements.txt
+
+# Standalone executable build
+pyinstaller==6.11.1
